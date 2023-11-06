@@ -1,23 +1,28 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { Error, Home, Intro, Payment, PaymentCallback } from 'src/pages';
+import { Error, Event, Home, Payment, PaymentCallback } from 'src/pages';
+import { Layout } from 'src/components';
 
 function App() {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <Home />,
+      element: (
+        <Layout>
+          <Home />
+        </Layout>
+      ),
       errorElement: <Error />,
     },
     {
-      path: '/event',
-      element: <Intro />,
+      path: '/event/:id',
+      element: <Event />,
     },
     {
       path: '/payment',
       element: <Payment />,
     },
     {
-      path: '/payment-callback',
+      path: '/payment-callback-success',
       element: <PaymentCallback />,
     },
   ]);

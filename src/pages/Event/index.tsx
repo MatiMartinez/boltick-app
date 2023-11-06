@@ -2,11 +2,17 @@ import { ChevronLeftIcon } from '@chakra-ui/icons';
 import { Flex, IconButton, Image, Link } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { EventCard } from 'src/components';
+import { useMatchEvent } from 'src/hooks';
 
-const Intro: React.FC = () => {
+const Event: React.FC = () => {
+  const { event } = useMatchEvent();
+
+  if (!event) return null;
+
   return (
     <Flex minH="100vh" minW="100vw" bg="#ececed">
-      <Image src="/event-back.jpg" objectFit="cover" />
+      <Image src="/event-back-2.jpg" objectFit="cover" w="100vw" h="100vh" />
+
       <Flex
         position="fixed"
         top={0}
@@ -31,6 +37,7 @@ const Intro: React.FC = () => {
           <Image src="/instagram.svg" boxSize="8" />
         </Link>
       </Flex>
+
       <Flex
         padding="6"
         borderTopEndRadius="3xl"
@@ -38,13 +45,17 @@ const Intro: React.FC = () => {
         bg="white"
         height="max-content"
         width="100%"
+        maxW={800}
+        boxShadow="2xl"
         position="fixed"
         bottom={0}
+        left="50%"
+        transform="translateX(-50%)"
       >
-        <EventCard />
+        <EventCard {...event} />
       </Flex>
     </Flex>
   );
 };
 
-export default Intro;
+export default Event;

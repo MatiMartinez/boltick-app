@@ -2,12 +2,14 @@ import { CalendarIcon, TimeIcon } from '@chakra-ui/icons';
 import { Avatar, Button, Flex, Heading, IconButton, Text } from '@chakra-ui/react';
 import { ArrowRightIcon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
+import { Event } from 'src/interfaces';
+import { dateToText } from 'src/utils/date';
 
-const EventCard: React.FC = () => {
+const EventCard: React.FC<Event> = ({ date, name, schedule }) => {
   return (
     <Flex flexDir="column" gap={4}>
-      <Heading color="#333333" size="xs">
-        Paax Summer 2023
+      <Heading color="#333333" size="md">
+        {name}
       </Heading>
 
       <Flex
@@ -33,20 +35,20 @@ const EventCard: React.FC = () => {
         <Flex align="center" gap={2}>
           <CalendarIcon color="#777777" />
           <Text fontSize="small" color="#777777">
-            Octubre 28, 2023
+            {dateToText(schedule)}
           </Text>
         </Flex>
         <Flex align="center" gap={2}>
           <TimeIcon color="#777777" />
           <Text fontSize="small" color="#777777">
-            01:00 AM - 06:00 AM
+            {date}
           </Text>
         </Flex>
       </Flex>
 
       <Flex flexDir="column" gap={2}>
-        <Heading size="" color="#333333">
-          Temporada Verano
+        <Heading size="sm" color="#333333">
+          Sobre el Evento
         </Heading>
         <Text fontSize="sm" color="#777777">
           Lorem ipsum dolor sit amet consectetur adipiscing elit nisl fermentum pretium hendrerit, vulputate nisi at

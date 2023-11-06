@@ -1,17 +1,17 @@
 import { AddIcon, ArrowForwardIcon, ChevronLeftIcon, MinusIcon } from '@chakra-ui/icons';
-import { Button, Flex, Heading, IconButton, Image, Input, Link, Text } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Button, Flex, Heading, IconButton, Image, Input, Text } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 import { useTickets } from 'src/hooks';
 
 const Payment: React.FC = () => {
-  const { general, vips, addGeneral, removeGeneral, addVip, removeVip } = useTickets();
+  const navigate = useNavigate();
+  const { general, vips, addGeneral, removeGeneral, addVip, removeVip, onSubmit } = useTickets();
 
   return (
     <Flex flexDir="column" minH="100vh" minW="100vw" bg="#ececed">
       <Flex align="center" justify="space-between" paddingInline={4} width="100%" height={100}>
         <IconButton
-          as={RouterLink}
-          to="/event"
+          onClick={() => navigate(-1)}
           isRound
           aria-label="More Info"
           icon={<ChevronLeftIcon fontSize="2xl" />}
@@ -102,9 +102,7 @@ const Payment: React.FC = () => {
         </Flex>
 
         <Button
-          as={Link}
-          href="/payment"
-          target="_blank"
+          onClick={onSubmit}
           size="lg"
           borderRadius="3xl"
           rightIcon={<ArrowForwardIcon />}

@@ -1,6 +1,5 @@
-import { InfoOutlineIcon } from '@chakra-ui/icons';
-import { Button, Flex, Heading, Image, Text } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
+import { Button, Flex, Heading, Image, Text } from '@chakra-ui/react';
 import { useMatchEvent } from 'src/hooks';
 import { dateToHHMM, dateToSpanishText } from 'src/utils/date';
 

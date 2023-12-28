@@ -1,15 +1,23 @@
-import { AddIcon, ArrowForwardIcon, ChevronLeftIcon, MinusIcon } from '@chakra-ui/icons';
-import { Button, Flex, Heading, IconButton, Image, Input, Text } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
-import { useTickets } from 'src/hooks';
+import { AddIcon, ArrowForwardIcon, MinusIcon } from '@chakra-ui/icons';
+import { Button, Divider, Flex, Heading, IconButton, Input, Text } from '@chakra-ui/react';
+import { usePayment } from 'src/hooks';
+import { formatARS } from 'src/utils/currency';
 
 const Payment: React.FC = () => {
-  const navigate = useNavigate();
-  const { general, vips, addGeneral, removeGeneral, addVip, removeVip, onSubmit } = useTickets();
+  const { register, tickets, addTicket, removeTicket, onSubmit, handleSubmit } = usePayment();
 
   return (
-    <Flex flexDir="column" minH="100vh" minW="100vw" bg="#ececed">
-      <Flex align="center" justify="space-between" paddingInline={4} width="100%" height={100}>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Flex
+        flexDir="column"
+        gap={{ base: 4, md: 8 }}
+        paddingBlock={[4, 8]}
+        // paddingInline={[4, 8, 8, 32, 64, 80]}
+        paddingInline={{ base: 4, sm: 6, md: 12, lg: '20%', xl: '30%', '2xl': '30%' }}
+        minH="100vh"
+        minW="100vw"
+      >
+        {/* <Flex align="center" width="100%" paddingTop={6}>
         <IconButton
           onClick={() => navigate(-1)}
           isRound
@@ -19,100 +27,92 @@ const Payment: React.FC = () => {
           color="black"
           size="lg"
         />
-        <Heading></Heading>
-      </Flex>
+      </Flex> */}
+        <Heading fontSize={{ base: 24, md: 32 }}>RESUMEN DE COMPRA</Heading>
 
-      <Flex flexDir="column" gap={4} paddingInline={4} paddingBottom={8} width="100%" mt="auto">
-        <Flex flexDir="column" gap={4} padding={4} borderRadius="2xl" bg="white">
-          <Input variant="filled" size="md" placeholder="Correo electrónico" />
-        </Flex>
-
-        <Flex flexDir="column" gap={4} padding={4} borderRadius="2xl" bg="white">
-          <Text fontSize="sm" fontWeight={700}>
-            Generales
-          </Text>
-          <Flex flexDir="row" align="center" justify="space-between" borderWidth={1} borderRadius="2xl" padding={2}>
-            <IconButton
-              aria-label="Add Ticket"
-              icon={<MinusIcon />}
-              isRound={true}
-              isDisabled={general.quantity <= 0}
-              onClick={removeGeneral}
+        <Flex flexDir="column" gap={{ base: 2, md: 4 }}>
+          <Text fontWeight={600}>Datos de contacto</Text>
+          <Flex flexDir="column" gap={4}>
+            <Input
+              {...register('email', { required: '*' })}
+              variant="filled"
+              size="md"
+              placeholder="Correo electrónico"
             />
-            <Text>{general.quantity}</Text>
-            <IconButton aria-label="Remove Ticket" icon={<AddIcon />} isRound={true} onClick={addGeneral} />
-          </Flex>
-        </Flex>
-
-        <Flex flexDir="column" gap={4} padding={4} borderRadius="2xl" bg="white">
-          <Text fontSize="sm" fontWeight={700}>
-            VIP
-          </Text>
-          <Flex flexDir="row" align="center" justify="space-between" borderWidth={1} borderRadius="2xl" padding={2}>
-            <IconButton
-              aria-label="Add Ticket"
-              icon={<MinusIcon />}
-              isRound={true}
-              isDisabled={vips.quantity <= 0}
-              onClick={removeVip}
+            <Input
+              {...register('phone', { required: '*' })}
+              variant="filled"
+              size="md"
+              placeholder="Número de teléfono"
             />
-            <Text>{vips.quantity}</Text>
-            <IconButton aria-label="Remove Ticket" icon={<AddIcon />} isRound={true} onClick={addVip} />
           </Flex>
         </Flex>
 
-        <Flex flexDir="column" gap={1} padding={4} borderRadius="2xl" bg="white">
-          <Text fontSize="sm" fontWeight={700}>
-            Resumen de compra
-          </Text>
-          <Flex align="center" justify="space-between" gap={4}>
-            <Text fontSize="sm" color="gray">
-              Entradas generales {general.quantity > 0 && `(${general.quantity})`}
-            </Text>
-            <Text fontSize="sm" color="gray">
-              $ {general.quantity * 2000}
-            </Text>
-          </Flex>
-          <Flex align="center" justify="space-between" gap={4}>
-            <Text fontSize="sm" color="gray">
-              Entradas vips {vips.quantity > 0 && `(${vips.quantity})`}
-            </Text>
-            <Text fontSize="sm" color="gray">
-              $ {vips.quantity * 3000}
-            </Text>
-          </Flex>
-          <Flex align="center" justify="space-between" gap={4}>
-            <Text fontSize="sm" fontWeight={700} color="gray">
-              Total
-            </Text>
-            <Text fontSize="sm" fontWeight={700} color="gray">
-              $ {general.quantity * 2000 + vips.quantity * 3000}
-            </Text>
+        <Flex flexDir="column" gap={{ base: 2, md: 4 }}>
+          <Text fontWeight={600}>Tickets</Text>
+          {tickets.map(({ cost, id, name, quantity }) => (
+            <Flex
+              flexDir="row"
+              justify="space-between"
+              align="center"
+              gap={4}
+              paddingInline={6}
+              paddingBlock={4}
+              border="1px solid #DCDCDC"
+              borderRadius="lg"
+            >
+              <Flex flexDir="column">
+                <Text fontSize={14}>{name}</Text>
+                <Text fontSize={16} fontWeight={600} color="green.600">
+                  {formatARS(cost)}
+                </Text>
+              </Flex>
+              <Flex flexDir="row" align="center" gap={4}>
+                <IconButton isRound aria-label="Remove ticket" icon={<MinusIcon />} onClick={() => removeTicket(id)} />
+                <Text fontWeight={600}>{quantity}</Text>
+                <IconButton isRound aria-label="Add ticket" icon={<AddIcon />} onClick={() => addTicket(id)} />
+              </Flex>
+            </Flex>
+          ))}
+        </Flex>
+
+        <Divider />
+
+        <Flex flexDir="column" gap={{ base: 2, md: 4 }}>
+          <Text fontWeight={600}>Resumen de pago</Text>
+          <Flex flexDir="column" gap={{ base: 1, md: 2 }}>
+            {tickets.map(({ cost, name, quantity }) => (
+              <Flex justify="space-between" align="center">
+                <Text>
+                  {name} {quantity > 0 && `(${quantity} ud.)`}
+                </Text>
+                <Text>{formatARS(cost * quantity)}</Text>
+              </Flex>
+            ))}
+
+            <Flex justify="space-between" align="center">
+              <Text fontWeight={600}>Total</Text>
+              <Text fontWeight={600}>
+                {formatARS(tickets.reduce((acc, prev) => acc + prev.cost * prev.quantity, 0))}
+              </Text>
+            </Flex>
           </Flex>
         </Flex>
 
-        <Flex flexDir="column" gap={2} padding={4} borderRadius="2xl" bg="white">
-          <Flex align="center" justify="space-between" gap={4}>
-            <Image src="/mercadopago.png" boxSize={8} objectFit="contain" />
-            <Image src="/visa.png" boxSize={8} objectFit="contain" />
-            <Image src="/mastercard.png" boxSize="8" objectFit="contain" />
-            <Image src="/american-express.png" boxSize="8" objectFit="contain" />
-            <Image src="/naranja.webp" boxSize="8" objectFit="contain" />
-          </Flex>
-        </Flex>
+        <Divider />
 
         <Button
-          onClick={onSubmit}
+          type="submit"
           size="lg"
           borderRadius="3xl"
           rightIcon={<ArrowForwardIcon />}
-          bg="#86A789"
+          bg="green.600"
           color="white"
         >
           Ir a pagar
         </Button>
       </Flex>
-    </Flex>
+    </form>
   );
 };
 

@@ -2,11 +2,16 @@ import { useEffect, useRef, useState } from 'react';
 import { Event } from 'src/interfaces';
 import debounce from 'lodash.debounce';
 import { algoliaIndex } from 'src/utils/algolia';
+import { useOutsideClick } from '@chakra-ui/react';
 
 const useSearch = () => {
+  const ref = useRef<HTMLDivElement>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [events, setEvents] = useState<Event[]>([]);
+
+  useOutsideClick({ ref, handler: () => setIsOpen(false) });
 
   const debouncedSearch = useRef(
     debounce(async (fn) => {
@@ -23,6 +28,7 @@ const useSearch = () => {
 
     if (e.target.value.length >= 3) {
       setIsLoading(true);
+      setIsOpen(true);
       debouncedSearch(() => handleSearch(e.target.value));
     }
   };
@@ -38,7 +44,11 @@ const useSearch = () => {
       });
   };
 
-  return { searchTerm, isLoading, events, handleChangeSearchTerm };
+  const onClickInside = () => {
+    setIsOpen(true);
+  };
+
+  return { searchTerm, isOpen, isLoading, events, ref, handleChangeSearchTerm, onClickInside };
 };
 
 export default useSearch;

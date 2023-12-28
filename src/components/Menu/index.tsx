@@ -45,16 +45,19 @@ const Menu: React.FC = () => {
           </DrawerHeader>
           <DrawerBody>
             <Flex flexDir="column" gap={4}>
-              <Text as={Link} to="/about" fontSize="lg" fontWeight={700} textTransform="uppercase">
+              <Text as={Link} to="/" fontSize="lg" fontWeight={700} textTransform="uppercase" onClick={onClose}>
+                Inicio
+              </Text>
+              <Text as={Link} to="/about" fontSize="lg" fontWeight={700} textTransform="uppercase" onClick={onClose}>
                 Nosotros
               </Text>
-              <Text as={Link} to="/contact" fontSize="lg" fontWeight={700} textTransform="uppercase">
+              <Text as={Link} to="/contact" fontSize="lg" fontWeight={700} textTransform="uppercase" onClick={onClose}>
                 Contacto
               </Text>
-              <Text as={Link} to="/terms" fontSize="lg" fontWeight={700} textTransform="uppercase">
+              <Text as={Link} to="/terms" fontSize="lg" fontWeight={700} textTransform="uppercase" onClick={onClose}>
                 Términos
               </Text>
-              <Text as={Link} to="/help" fontSize="lg" fontWeight={700} textTransform="uppercase">
+              <Text as={Link} to="/help" fontSize="lg" fontWeight={700} textTransform="uppercase" onClick={onClose}>
                 Ayuda
               </Text>
             </Flex>

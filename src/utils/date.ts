@@ -9,3 +9,19 @@ export const dateToText = (timestamp: number) => {
 
   return `${formattedMonth} ${day}, ${year}`;
 };
+
+export const dateToSpanishText = (timestamp: number): string => {
+  const date = new Date(timestamp * 1000);
+  return date.toLocaleDateString('es-ES', { month: 'long', day: 'numeric' });
+};
+
+export const dateToHHMM = (timestamp: number): string => {
+  const date: Date = new Date(timestamp * 1000);
+  let hours: string = date.getHours().toString();
+  let minutes: string = date.getMinutes().toString();
+
+  hours = hours.length < 2 ? '0' + hours : hours;
+  minutes = minutes.length < 2 ? '0' + minutes : minutes;
+
+  return `${hours}:${minutes}`;
+};

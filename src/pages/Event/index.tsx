@@ -1,60 +1,78 @@
-import { ChevronLeftIcon } from '@chakra-ui/icons';
-import { Flex, IconButton, Image, Link } from '@chakra-ui/react';
+import { InfoOutlineIcon } from '@chakra-ui/icons';
+import { Button, Flex, Heading, Image, Text } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
-import { EventCard } from 'src/components';
 import { useMatchEvent } from 'src/hooks';
+import { dateToHHMM, dateToSpanishText } from 'src/utils/date';
 
 const Event: React.FC = () => {
   const { event } = useMatchEvent();
 
   if (!event) return null;
 
+  const { category, description, location_name, location_address, name, objectID, start_date } = event;
+
   return (
-    <Flex minH="100vh" minW="100vw" bg="#ececed">
-      <Image src="/event-back-2.jpg" objectFit="cover" w="100vw" h="100vh" />
-
+    <>
       <Flex
-        position="fixed"
-        top={0}
-        left={0}
-        w="100%"
-        padding="3rem 1rem"
-        height={70}
+        flexDir={{ base: 'column', md: 'row' }}
         align="center"
-        justify="space-between"
+        gap={{ base: 8 }}
+        paddingBlock={[4, 8, 8, 8, 16, 16]}
       >
-        <IconButton
-          as={RouterLink}
-          to="/"
-          isRound
-          aria-label="More Info"
-          icon={<ChevronLeftIcon fontSize="2xl" />}
-          bg="white"
-          color="black"
-          size="lg"
-        />
-        <Link bg="white" padding="2" borderRadius="full" href="https://www.instagram.com/paax_season/" target="_blank">
-          <Image src="/instagram.svg" boxSize="8" />
-        </Link>
-      </Flex>
+        <Flex w="100%" position="relative">
+          <Flex
+            flexDir="row"
+            align="center"
+            gap={2}
+            paddingInline={4}
+            paddingBlock={2}
+            borderRadius="3xl"
+            position="absolute"
+            top={{ base: 4, md: 8 }}
+            left={{ base: 4, md: 8 }}
+            bg="black"
+            opacity="70%"
+          >
+            <Text color="white" fontWeight={600}>
+              {category}
+            </Text>
+          </Flex>
+          <Image
+            src="/event-back.jpg"
+            alt={event.name}
+            w={{ base: '100%', lg: 'auto' }}
+            h={{ base: 225, sm: 300, md: 500, lg: 550, xl: 600 }}
+            borderRadius="3xl"
+            objectFit="cover"
+            objectPosition="bottom"
+          />
+        </Flex>
 
-      <Flex
-        padding="6"
-        borderTopEndRadius="3xl"
-        borderTopLeftRadius="3xl"
-        bg="white"
-        height="max-content"
-        width="100%"
-        maxW={800}
-        boxShadow="2xl"
-        position="fixed"
-        bottom={0}
-        left="50%"
-        transform="translateX(-50%)"
-      >
-        <EventCard {...event} />
+        <Flex flexDir="column" gap={{ base: 4, sm: 6 }} w="100%">
+          <Text fontWeight={600} color="green.600">
+            {dateToSpanishText(start_date)}, {dateToHHMM(start_date)}
+          </Text>
+
+          <Flex flexDir="column" gap={{ base: 1, sm: 2 }}>
+            <Heading fontSize={24}>{name}</Heading>
+            <Text>{category}</Text>
+          </Flex>
+
+          <Flex flexDir="column" gap={{ base: 0, md: 1 }}>
+            <Text fontSize="sm" fontWeight={600}>
+              {location_name}
+            </Text>
+            <Text fontSize="sm">{location_address}</Text>
+          </Flex>
+
+          <Text fontSize={{ base: 14, md: 16 }}>{description}</Text>
+
+          <Button as={RouterLink} to={`/payment/${objectID}`} size="lg" color="white" bg="green.600">
+            Comprar Tickets
+          </Button>
+        </Flex>
       </Flex>
-    </Flex>
+    </>
   );
 };
 

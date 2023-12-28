@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Event } from 'src/interfaces';
 import { dateToText } from 'src/utils/date';
 
-const EventCard: React.FC<Event> = ({ date, name, schedule }) => {
+const EventCard: React.FC<Event> = ({ date, name, schedule, objectID }) => {
   return (
     <Flex flexDir="column" gap={4}>
       <Heading color="#333333" size="md">
@@ -59,7 +59,7 @@ const EventCard: React.FC<Event> = ({ date, name, schedule }) => {
 
       <Button
         as={Link}
-        to="/payment"
+        to={`/payment/${objectID}`}
         size="lg"
         borderRadius="3xl"
         rightIcon={<ArrowRightIcon />}

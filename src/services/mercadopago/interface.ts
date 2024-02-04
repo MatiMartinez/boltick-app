@@ -1,5 +1,6 @@
 export interface CreateMercadoPagoPayload {
   items: Item[];
+  phone: string;
   user: string;
 }
 

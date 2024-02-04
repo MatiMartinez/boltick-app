@@ -106,7 +106,7 @@ const usePayment = () => {
       unit_price: cost,
     }));
 
-    await createMercadoPagoService({ items, user: values.email })
+    await createMercadoPagoService({ items, phone: values.phone, user: values.email })
       .then((response) => {
         window.location.href = response.data.url;
       })

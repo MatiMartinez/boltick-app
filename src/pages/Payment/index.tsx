@@ -1,50 +1,86 @@
-import { AddIcon, ArrowForwardIcon, MinusIcon } from '@chakra-ui/icons';
-import { Button, Divider, Flex, Heading, IconButton, Input, Text } from '@chakra-ui/react';
+import { AddIcon, ArrowForwardIcon, ChevronLeftIcon, MinusIcon } from '@chakra-ui/icons';
+import {
+  Button,
+  Divider,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  Heading,
+  IconButton,
+  Input,
+  Text,
+} from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import { RedirectProgress } from 'src/components';
 import { usePayment } from 'src/hooks';
 import { formatARS } from 'src/utils/currency';
 
 const Payment: React.FC = () => {
-  const { register, tickets, addTicket, removeTicket, onSubmit, handleSubmit } = usePayment();
+  const { register, errors, event, tickets, isLoading, addTicket, removeTicket, onSubmit, handleSubmit } = usePayment();
+  const navigate = useNavigate();
+
+  if (!event) return null;
+
+  if (isLoading) return <RedirectProgress />;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Flex
         flexDir="column"
+        justify="center"
         gap={{ base: 4, md: 8 }}
         paddingBlock={[4, 8]}
-        // paddingInline={[4, 8, 8, 32, 64, 80]}
         paddingInline={{ base: 4, sm: 6, md: 12, lg: '20%', xl: '30%', '2xl': '30%' }}
         minH="100vh"
         minW="100vw"
       >
-        {/* <Flex align="center" width="100%" paddingTop={6}>
-        <IconButton
-          onClick={() => navigate(-1)}
-          isRound
-          aria-label="More Info"
-          icon={<ChevronLeftIcon fontSize="2xl" />}
-          bg="white"
-          color="black"
-          size="lg"
-        />
-      </Flex> */}
-        <Heading fontSize={{ base: 24, md: 32 }}>RESUMEN DE COMPRA</Heading>
+        <Flex flexDir="row" justify="space-between" align="center">
+          <IconButton
+            onClick={() => navigate(-1)}
+            isRound
+            aria-label="More Info"
+            icon={<ChevronLeftIcon fontSize="2xl" />}
+            bg="green.600"
+            color="white"
+            size="md"
+          />
+          <Heading fontSize={{ base: 20, md: 32 }}>{event.name}</Heading>
+        </Flex>
 
         <Flex flexDir="column" gap={{ base: 2, md: 4 }}>
           <Text fontWeight={600}>Datos de contacto</Text>
           <Flex flexDir="column" gap={4}>
-            <Input
-              {...register('email', { required: '*' })}
-              variant="filled"
-              size="md"
-              placeholder="Correo electrónico"
-            />
-            <Input
-              {...register('phone', { required: '*' })}
-              variant="filled"
-              size="md"
-              placeholder="Número de teléfono"
-            />
+            <FormControl isInvalid={!!errors?.email}>
+              <Input
+                {...register('email', {
+                  required: '* Correo electrónico requerido*',
+                  pattern: {
+                    value: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                    message: '* Formato inválido',
+                  },
+                })}
+                name="email"
+                variant="filled"
+                size="md"
+                placeholder="Correo electrónico"
+                isInvalid={!!errors?.email}
+              />
+              <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={!!errors?.phone}>
+              <Input
+                {...register('phone', {
+                  required: '* Teléfono requerido*',
+                  minLength: { value: 8, message: '* Número inválido' },
+                })}
+                name="phone"
+                variant="filled"
+                size="md"
+                placeholder="Número de teléfono"
+                type="number"
+              />
+              <FormErrorMessage>{errors.phone?.message}</FormErrorMessage>
+            </FormControl>
           </Flex>
         </Flex>
 

@@ -7,23 +7,29 @@ const useMatchEvent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [event, setTicket] = useState<Event | null>(null);
+  const [event, setEvent] = useState<Event | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
+
     if (id) {
       algoliaIndex
         .getObject(id)
         .then((el) => {
-          setTicket(el as Event);
+          setEvent(el as Event);
         })
         .catch(() => {
           navigate('/');
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id]);
 
-  return { event };
+  return { event, isLoading };
 };
 
 export default useMatchEvent;

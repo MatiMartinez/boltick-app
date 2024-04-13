@@ -1,45 +1,56 @@
-import { ArrowForwardIcon, CheckIcon } from '@chakra-ui/icons';
-import { Button, Flex, Stack, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import { ArrowForwardIcon, CheckIcon } from '@chakra-ui/icons';
+import { Button, CircularProgress, Flex, Stack, Text } from '@chakra-ui/react';
+
+import { usePaymentParams } from 'src/hooks';
+import { formatARS } from 'src/utils/currency';
 
 const PaymentCallback: React.FC = () => {
+  const { amount, isLoading } = usePaymentParams();
+
+  if (isLoading)
+    return (
+      <Flex flexDir="column" align="center" justify="center" gap={12} minH="100vh" minW="100vw">
+        <CircularProgress isIndeterminate color="green.600" />
+      </Flex>
+    );
+
   return (
-    <Flex flexDir="column" align="center" justify="center" gap={12} minH="100vh" minW="100vw" bg="#ececed">
+    <Flex
+      flexDir="column"
+      align="center"
+      justify="center"
+      gap={12}
+      minH="100vh"
+      minW="100vw"
+      paddingInline={{ base: 8, sm: 16, md: 48, lg: '30%', xl: '40%', '2xl': '40%' }}
+    >
       <Stack bg="green.600" borderRadius="full" padding={4} width="max-content">
         <CheckIcon color="white" />
       </Stack>
 
       <Flex flexDir="column" textAlign="center">
-        <Text fontSize="md" fontWeight={700}>
-          Total amount
+        <Text fontSize="lg" fontWeight={700}>
+          Monto total
         </Text>
-        <Text fontSize="5xl" fontWeight={700}>
-          $ 12.000
+        <Text fontSize="4xl" fontWeight={700}>
+          {formatARS(amount)}
         </Text>
       </Flex>
 
       <Flex flexDir="column" gap={4} textAlign="center">
-        <Text fontSize="md" fontWeight={700}>
-          Payment Successful!
+        <Text fontSize="lg" fontWeight={700}>
+          ¡Pago Realizado con Éxito!
         </Text>
-        <Text fontSize="sm">
-          Lorem ipsum dolor sit amet consectetur adipiscing, elit dictumst non erat molestie integer.
+        <Text fontSize="md">
+          Hemos recibido tu pago correctamente. Pronto te enviaremos un correo electrónico con la información sobre tu
+          compra. ¡Gracias por elegirnos!
         </Text>
       </Flex>
 
-      <Stack position="fixed" bottom="2rem" left="1rem" right="1rem">
-        <Button
-          as={Link}
-          to="/"
-          size="lg"
-          borderRadius="3xl"
-          rightIcon={<ArrowForwardIcon />}
-          bg="#86A789"
-          color="white"
-        >
-          Continuar
-        </Button>
-      </Stack>
+      <Button as={Link} to="/" size="lg" borderRadius="3xl" rightIcon={<ArrowForwardIcon />} bg="#86A789" color="white">
+        Volver al sitio
+      </Button>
     </Flex>
   );
 };

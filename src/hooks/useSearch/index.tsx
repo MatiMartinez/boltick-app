@@ -48,7 +48,11 @@ const useSearch = () => {
     setIsOpen(true);
   };
 
-  return { searchTerm, isOpen, isLoading, events, ref, handleChangeSearchTerm, onClickInside };
+  const onClose = () => {
+    setIsOpen(false);
+  };
+
+  return { searchTerm, isOpen, isLoading, events, ref, handleChangeSearchTerm, onClickInside, onClose };
 };
 
 export default useSearch;

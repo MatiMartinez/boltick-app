@@ -44,8 +44,13 @@ const Payment: React.FC = () => {
             color="white"
             size="md"
           />
-          <Heading fontSize={{ base: 20, md: 32 }}>{event.name}</Heading>
+          <Flex flexDir="column" align="flex-end">
+            <Heading fontSize={{ base: 20, md: 32 }}>{event.name}</Heading>
+            <Text>{event.location_name}</Text>
+          </Flex>
         </Flex>
+
+        <Divider />
 
         <Flex flexDir="column" gap={{ base: 2, md: 4 }}>
           <Text fontWeight={600}>Datos de contacto</Text>
@@ -96,6 +101,7 @@ const Payment: React.FC = () => {
               paddingBlock={4}
               border="1px solid #DCDCDC"
               borderRadius="lg"
+              key={id}
             >
               <Flex flexDir="column">
                 <Text fontSize={14}>{name}</Text>
@@ -117,8 +123,8 @@ const Payment: React.FC = () => {
         <Flex flexDir="column" gap={{ base: 2, md: 4 }}>
           <Text fontWeight={600}>Resumen de pago</Text>
           <Flex flexDir="column" gap={{ base: 1, md: 2 }}>
-            {tickets.map(({ cost, name, quantity }) => (
-              <Flex justify="space-between" align="center">
+            {tickets.map(({ cost, id, name, quantity }) => (
+              <Flex justify="space-between" align="center" key={id}>
                 <Text>
                   {name} {quantity > 0 && `(${quantity} ud.)`}
                 </Text>

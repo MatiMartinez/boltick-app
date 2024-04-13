@@ -6,4 +6,5 @@ export { default as Help } from './Help';
 export { default as Home } from './Home';
 export { default as Payment } from './Payment';
 export { default as PaymentCallback } from './PaymentCallback';
+export { default as PaymentCallbackError } from './PaymentCallbackError';
 export { default as Terms } from './Terms';

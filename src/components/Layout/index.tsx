@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 import { Divider, Flex, Heading, Image, Link as ChakraLink, Text } from '@chakra-ui/react';
-import { Menu, SearchEvent } from 'src/components';
+import { Menu, SearchBar } from 'src/components';
 import { useScroll } from 'src/hooks';
 
 interface Props {
@@ -22,9 +22,11 @@ const Layout: React.FC<PropsWithChildren & Props> = ({ children, withSearch }) =
       <Flex flexDirection="row" justify="space-between" align="center" gap={4}>
         <Flex flexDirection="row" align="center" gap={4}>
           <Menu />
-          <Heading fontSize={32} letterSpacing={4}>
-            Boltick
-          </Heading>
+          <Link to="/">
+            <Heading fontSize={32} letterSpacing={4}>
+              Boltick
+            </Heading>
+          </Link>
         </Flex>
 
         <ChakraLink
@@ -40,7 +42,7 @@ const Layout: React.FC<PropsWithChildren & Props> = ({ children, withSearch }) =
         </ChakraLink>
       </Flex>
 
-      {withSearch && <SearchEvent />}
+      {withSearch && <SearchBar />}
 
       {children}
 

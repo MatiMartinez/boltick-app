@@ -1,5 +1,16 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { About, Contact, Error, Event, Help, Home, Payment, PaymentCallback, Terms } from 'src/pages';
+import {
+  About,
+  Contact,
+  Error,
+  Event,
+  Help,
+  Home,
+  Payment,
+  PaymentCallback,
+  PaymentCallbackError,
+  Terms,
+} from 'src/pages';
 import { Layout } from 'src/components';
 import { EventsProvider } from './context';
 
@@ -65,6 +76,10 @@ function App() {
     {
       path: '/payment-callback-success',
       element: <PaymentCallback />,
+    },
+    {
+      path: '/payment-callback-failure',
+      element: <PaymentCallbackError />,
     },
   ]);
 

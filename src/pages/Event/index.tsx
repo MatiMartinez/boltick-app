@@ -1,10 +1,17 @@
 import { Link as RouterLink } from 'react-router-dom';
-import { Button, Flex, Heading, Image, Text } from '@chakra-ui/react';
+import { Button, CircularProgress, Flex, Heading, Image, Text } from '@chakra-ui/react';
 import { useMatchEvent } from 'src/hooks';
 import { dateToHHMM, dateToSpanishText } from 'src/utils/date';
 
 const Event: React.FC = () => {
-  const { event } = useMatchEvent();
+  const { event, isLoading } = useMatchEvent();
+
+  if (isLoading)
+    return (
+      <Flex paddingBlock={{ base: 48, md: 64 }} justify="center">
+        <CircularProgress isIndeterminate color="green.600" />
+      </Flex>
+    );
 
   if (!event) return null;
 

@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { Form } from './interface';
 import { Event } from 'src/interfaces';
-import { createMercadoPagoService } from 'src/services/mercadopago';
+import { createPaymentService } from 'src/services/payments';
 import { algoliaIndex } from 'src/utils/algolia';
 
 const usePayment = () => {
@@ -106,7 +106,7 @@ const usePayment = () => {
       unit_price: cost,
     }));
 
-    await createMercadoPagoService({ items, phone: values.phone, user: values.email })
+    await createPaymentService({ items, phone: values.phone, user: values.email })
       .then((response) => {
         window.location.href = response.data.url;
       })

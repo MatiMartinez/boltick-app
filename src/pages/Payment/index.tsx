@@ -126,7 +126,7 @@ const Payment: React.FC = () => {
             {tickets.map(({ cost, id, name, quantity }) => (
               <Flex justify="space-between" align="center" key={id}>
                 <Text>
-                  {name} {quantity > 0 && `(${quantity} ud.)`}
+                  {name} {quantity > 0 && `(${quantity} u.)`}
                 </Text>
                 <Text>{formatARS(cost * quantity)}</Text>
               </Flex>

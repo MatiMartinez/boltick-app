@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { updatePaymentCallback } from 'src/services/mercadopago';
+import { updatePaymentCallback } from 'src/services/payments';
 
 const usePaymentParams = () => {
   const [searchParams] = useSearchParams();
@@ -18,16 +18,20 @@ const usePaymentParams = () => {
     const id_param = searchParams.get('external_reference');
     const status_param = searchParams.get('status');
 
-    if (!id_param || !status_param) return;
+    if (!id_param || !status_param) {
+      setError(true);
+      setIsLoading(false);
+      return;
+    }
 
-    await updatePaymentCallback({ id: id_param, status: status_param })
+    await updatePaymentCallback({
+      id: id_param,
+      callbackStatus: status_param.charAt(0).toUpperCase() + status_param.slice(1),
+    })
       .then(() => {
         if (amount_param) {
           const amount_number = Number(amount_param);
-
-          if (typeof amount_number === 'number') {
-            setAmount(amount_number);
-          }
+          setAmount(amount_number);
         }
       })
       .catch(() => {

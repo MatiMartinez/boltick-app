@@ -1,4 +1,4 @@
-export interface CreateMercadoPagoPayload {
+export interface CreatePaymentPayload {
   items: Item[];
   phone: string;
   user: string;
@@ -12,5 +12,5 @@ interface Item {
 
 export interface UpdatePaymentCallbackPayload {
   id: string;
-  status: string;
+  callbackStatus: string;
 }

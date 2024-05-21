@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowForwardIcon, WarningTwoIcon } from '@chakra-ui/icons';
 import { Button, Flex, Stack, Text } from '@chakra-ui/react';
 
-const PaymentCallbackError: React.FC = () => {
+const PaymentCallbackFailure: React.FC = () => {
   return (
     <Flex
       flexDir="column"
@@ -11,7 +11,7 @@ const PaymentCallbackError: React.FC = () => {
       gap={12}
       minH="100vh"
       minW="100vw"
-      paddingInline={{ base: 8, sm: 16, md: 48, lg: '30%', xl: '40%', '2xl': '40%' }}
+      paddingInline={{ base: 8, sm: 16, md: 48, lg: '30%', xl: '30%', '2xl': '35%' }}
     >
       <Stack bg="red.600" borderRadius="full" padding={4} width="max-content">
         <WarningTwoIcon color="white" />
@@ -27,11 +27,11 @@ const PaymentCallbackError: React.FC = () => {
         </Text>
       </Flex>
 
-      <Button as={Link} to="/" size="lg" borderRadius="3xl" rightIcon={<ArrowForwardIcon />} bg="#86A789" color="white">
+      <Button as={Link} to="/" size="lg" rightIcon={<ArrowForwardIcon />}>
         Volver al sitio
       </Button>
     </Flex>
   );
 };
 
-export default PaymentCallbackError;
+export default PaymentCallbackFailure;

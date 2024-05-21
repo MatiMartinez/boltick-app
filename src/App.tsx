@@ -8,10 +8,12 @@ import {
   Home,
   Payment,
   PaymentCallback,
-  PaymentCallbackError,
+  PaymentCallbackFailure,
+  PaymentCallbackPending,
   Terms,
 } from 'src/pages';
 import { Layout } from 'src/components';
+
 import { EventsProvider } from './context';
 
 function App() {
@@ -78,8 +80,12 @@ function App() {
       element: <PaymentCallback />,
     },
     {
+      path: '/payment-callback-pending',
+      element: <PaymentCallbackPending />,
+    },
+    {
       path: '/payment-callback-failure',
-      element: <PaymentCallbackError />,
+      element: <PaymentCallbackFailure />,
     },
   ]);
 

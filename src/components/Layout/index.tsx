@@ -35,7 +35,7 @@ const Layout: React.FC<PropsWithChildren & Props> = ({ children, withSearch }) =
           borderColor="gray.300"
           borderWidth={1}
           borderRadius="full"
-          href="https://www.instagram.com/paax_season/"
+          href="https://www.instagram.com/boltick.entrada"
           target="_blank"
         >
           <Image src="/instagram.svg" boxSize="8" />

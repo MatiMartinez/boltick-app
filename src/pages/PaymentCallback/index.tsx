@@ -24,7 +24,7 @@ const PaymentCallback: React.FC = () => {
         gap={12}
         minH="100vh"
         minW="100vw"
-        paddingInline={{ base: 8, sm: 16, md: 48, lg: '30%', xl: '40%', '2xl': '40%' }}
+        paddingInline={{ base: 8, sm: 16, md: 48, lg: '30%', xl: '30%', '2xl': '35%' }}
       >
         <Stack bg="orange.600" borderRadius="full" padding={4} width="max-content">
           <WarningIcon color="white" />
@@ -45,15 +45,7 @@ const PaymentCallback: React.FC = () => {
           </Text>
         </Flex>
 
-        <Button
-          as={Link}
-          to="/"
-          size="lg"
-          borderRadius="3xl"
-          rightIcon={<ArrowForwardIcon />}
-          bg="#86A789"
-          color="white"
-        >
+        <Button as={Link} to="/" size="lg" rightIcon={<ArrowForwardIcon />}>
           Volver al sitio
         </Button>
       </Flex>
@@ -67,7 +59,7 @@ const PaymentCallback: React.FC = () => {
       gap={12}
       minH="100vh"
       minW="100vw"
-      paddingInline={{ base: 8, sm: 16, md: 48, lg: '30%', xl: '40%', '2xl': '40%' }}
+      paddingInline={{ base: 8, sm: 16, md: 48, lg: '30%', xl: '30%', '2xl': '35%' }}
     >
       <Stack bg="green.600" borderRadius="full" padding={4} width="max-content">
         <CheckIcon color="white" />
@@ -88,11 +80,12 @@ const PaymentCallback: React.FC = () => {
         </Text>
         <Text fontSize="md">
           Hemos recibido tu pago correctamente. Pronto te enviaremos un correo electrónico con la información sobre tu
-          compra. ¡Gracias por elegirnos!
+          compra. <br />
+          ¡Gracias por elegirnos!
         </Text>
       </Flex>
 
-      <Button as={Link} to="/" size="lg" borderRadius="3xl" rightIcon={<ArrowForwardIcon />} bg="#86A789" color="white">
+      <Button as={Link} to="/" size="lg" rightIcon={<ArrowForwardIcon />}>
         Volver al sitio
       </Button>
     </Flex>

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { SmallCloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import {
   Drawer,
@@ -6,12 +7,10 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Flex,
-  Heading,
   IconButton,
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
 
 const Menu: React.FC = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -22,24 +21,21 @@ const Menu: React.FC = () => {
         onClick={onOpen}
         aria-label="More Info"
         icon={<HamburgerIcon fontSize="2xl" />}
-        bg="white"
-        color="black"
         size="lg"
+        variant="iconbutton"
       />
 
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader>
-            <Flex flexDir="row" justify="space-between" align="center">
-              <Heading></Heading>
+            <Flex flexDir="row" justify="flex-end" align="center">
               <IconButton
                 onClick={onClose}
                 aria-label="Close Menu"
                 icon={<SmallCloseIcon fontSize="2xl" />}
-                bg="white"
-                color="black"
-                size="xs"
+                size="md"
+                variant="iconbutton"
               />
             </Flex>
           </DrawerHeader>

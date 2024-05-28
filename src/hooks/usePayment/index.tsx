@@ -7,6 +7,7 @@ import { Form } from './interface';
 import { Event } from 'src/interfaces';
 import { createPaymentService } from 'src/services/payments';
 import { algoliaIndex } from 'src/utils/algolia';
+import { generateId } from 'src/utils/common';
 
 const usePayment = () => {
   const { id } = useParams();
@@ -85,6 +86,8 @@ const usePayment = () => {
   };
 
   const onSubmit = async (values: Form) => {
+    if (!event) return;
+
     const has_tickets = values.tickets.some(({ quantity }) => quantity > 0);
     if (!has_tickets) {
       toast({
@@ -106,7 +109,13 @@ const usePayment = () => {
       unit_price: cost,
     }));
 
-    await createPaymentService({ items, phone: values.phone, user: values.email })
+    await createPaymentService({
+      event: event.name,
+      id: generateId(event.prefix),
+      items,
+      phone: values.phone,
+      user: values.email,
+    })
       .then((response) => {
         window.location.href = response.data.url;
       })

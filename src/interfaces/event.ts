@@ -9,6 +9,7 @@ export interface Event {
   location_name: string;
   name: string;
   objectID: string;
+  prefix: string;
   start_date: number;
   tickets: Ticket[];
 }

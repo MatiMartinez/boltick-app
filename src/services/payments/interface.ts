@@ -1,4 +1,6 @@
 export interface CreatePaymentPayload {
+  event: string;
+  id: string;
   items: Item[];
   phone: string;
   user: string;

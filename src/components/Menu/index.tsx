@@ -50,12 +50,12 @@ const Menu: React.FC = () => {
               <Text as={Link} to="/contact" fontSize="lg" fontWeight={700} textTransform="uppercase" onClick={onClose}>
                 Contacto
               </Text>
-              <Text as={Link} to="/terms" fontSize="lg" fontWeight={700} textTransform="uppercase" onClick={onClose}>
+              {/* <Text as={Link} to="/terms" fontSize="lg" fontWeight={700} textTransform="uppercase" onClick={onClose}>
                 Términos
               </Text>
               <Text as={Link} to="/help" fontSize="lg" fontWeight={700} textTransform="uppercase" onClick={onClose}>
                 Ayuda
-              </Text>
+              </Text> */}
             </Flex>
           </DrawerBody>
         </DrawerContent>

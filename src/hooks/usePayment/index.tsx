@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { Form } from './interface';
 import { Event } from 'src/interfaces';
-import { createPaymentService } from 'src/services/payments';
+import { createFreePaymentService, createPaymentService } from 'src/services/payments';
 import { algoliaIndex } from 'src/utils/algolia';
 import { generateId } from 'src/utils/common';
 
@@ -26,10 +26,7 @@ const usePayment = () => {
       email: '',
       isLoading: false,
       phone: '',
-      tickets: [
-        { cost: 2000, id: '627a3d1d-f001-4e2d-af60-268e1111b10d', name: 'Entrada General', quantity: 0 },
-        { cost: 5000, id: '32162930-32c4-4a84-9027-bf48e460909f', name: 'Entrada VIP', quantity: 0 },
-      ],
+      tickets: [],
     },
   });
   const [isLoading, tickets] = watch(['isLoading', 'tickets']);
@@ -40,7 +37,9 @@ const usePayment = () => {
       algoliaIndex
         .getObject(id)
         .then((el) => {
-          setEvent(el as Event);
+          const currentEvent = el as Event;
+          generateTickets(currentEvent);
+          setEvent(currentEvent);
         })
         .catch(() => {
           navigate('/');
@@ -48,6 +47,22 @@ const usePayment = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const generateTickets = (event: Event) => {
+    if (event.cost === 'FREE') {
+      setValue('tickets', [
+        { cost: 0, id: 'c8fca272-e31c-4f2f-a283-c88ef5dcc870', name: 'Entrada General', quantity: 0 },
+      ]);
+    }
+
+    if (event.cost === 'PAID') {
+      const newArr = event.tickets.map((el) => ({
+        ...el,
+        quantity: 0,
+      }));
+      setValue('tickets', newArr);
+    }
+  };
 
   const addTicket = (incoming_id: string) => {
     const prevState = getValues('tickets');
@@ -58,9 +73,11 @@ const usePayment = () => {
     }
 
     const updatedTickets = [...prevState];
+    const newQuantity = prevState[index].quantity < 10 ? updatedTickets[index].quantity + 1 : 10;
+
     updatedTickets[index] = {
       ...updatedTickets[index],
-      quantity: updatedTickets[index].quantity + 1,
+      quantity: newQuantity,
     };
 
     setValue('tickets', updatedTickets);
@@ -111,7 +128,7 @@ const usePayment = () => {
 
     await createPaymentService({
       event: event.name,
-      id: generateId(event.prefix),
+      id: generateId(event.code),
       items,
       phone: values.phone,
       user: values.email,
@@ -132,7 +149,65 @@ const usePayment = () => {
       });
   };
 
-  return { register, errors, event, tickets, isLoading, addTicket, removeTicket, onSubmit, handleSubmit };
+  const onSubmitFreeEvent = async (values: Form) => {
+    if (!event) return;
+
+    const has_tickets = values.tickets.some(({ quantity }) => quantity > 0);
+    if (!has_tickets) {
+      toast({
+        description: 'Debes seleccionar una entrada como mínimo.',
+        duration: 5000,
+        isClosable: true,
+        position: 'top-left',
+        status: 'error',
+        title: 'Selección Requerida.',
+      });
+      return;
+    }
+
+    setValue('isLoading', true);
+
+    const items = values.tickets.map(({ cost, name, quantity }) => ({
+      title: name,
+      quantity,
+      unit_price: cost,
+    }));
+
+    await createFreePaymentService({
+      event: event.name,
+      id: generateId(event.code),
+      items,
+      phone: values.phone,
+      user: values.email,
+    })
+      .then(() => {
+        navigate(`/confirm-free-event/${event.objectID}`);
+      })
+      .catch(() => {
+        toast({
+          description: 'Intenta nuevamente o comunicate por Whatsapp si el problema persiste.',
+          duration: 5000,
+          isClosable: true,
+          position: 'top-left',
+          status: 'error',
+          title: 'Ocurrio un error.',
+        });
+        setValue('isLoading', false);
+      });
+  };
+
+  return {
+    register,
+    errors,
+    event,
+    tickets,
+    isLoading,
+    addTicket,
+    removeTicket,
+    onSubmit,
+    onSubmitFreeEvent,
+    handleSubmit,
+  };
 };
 
 export default usePayment;

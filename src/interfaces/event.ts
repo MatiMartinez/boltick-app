@@ -1,26 +1,23 @@
 export interface Event {
   category: string;
   code: string;
+  cost: Cost;
   description: string;
   djs: string[];
   finish_date: number;
-  image: string;
   location_address: string;
   location_name: string;
   name: string;
   objectID: string;
-  prefix: string;
   start_date: number;
   tickets: Ticket[];
 }
 
-export interface DJ {
+export interface Ticket {
+  cost: number;
+  id: string;
   name: string;
-  instagram?: string;
-  twitter?: string;
+  quantity: number;
 }
 
-export interface Ticket {
-  name: string;
-  cost: number;
-}
+type Cost = 'FREE' | 'PAID' | 'MIXED';

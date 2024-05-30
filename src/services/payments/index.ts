@@ -8,3 +8,7 @@ export const createPaymentService = async (payload: CreatePaymentPayload) => {
 export const updatePaymentCallback = async (payload: UpdatePaymentCallbackPayload) => {
   return await instance.post('/update-payment-callback', payload);
 };
+
+export const createFreePaymentService = async (payload: CreatePaymentPayload) => {
+  return await instance.post('/create-free-payment', payload);
+};

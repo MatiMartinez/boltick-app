@@ -23,9 +23,7 @@ const Layout: React.FC<PropsWithChildren & Props> = ({ children, withSearch }) =
         <Flex flexDirection="row" align="center" gap={4}>
           <Menu />
           <Link to="/">
-            <Heading fontSize={32} letterSpacing={4}>
-              Boltick
-            </Heading>
+            <Image src="/boltick.svg" alt="Logo" boxSize="28" height="max-content" />
           </Link>
         </Flex>
 
@@ -35,7 +33,7 @@ const Layout: React.FC<PropsWithChildren & Props> = ({ children, withSearch }) =
           borderColor="gray.300"
           borderWidth={1}
           borderRadius="full"
-          href="https://www.instagram.com/boltick.entrada"
+          href="https://www.instagram.com/boltick.web3"
           target="_blank"
         >
           <Image src="/instagram.svg" boxSize="8" />
@@ -60,19 +58,13 @@ const Layout: React.FC<PropsWithChildren & Props> = ({ children, withSearch }) =
             <Heading fontSize={32} letterSpacing={4}>
               Boltick
             </Heading>
-            <Text>Design amazing digital experiences that create more happy in the world.</Text>
+            <Text>¡Únete a la revolución digital con Boltick!</Text>
           </Flex>
 
           <Flex flexDir="column" textAlign={{ base: 'inherit', sm: 'end' }} gap={2}>
             <Heading fontSize={16}>Legal</Heading>
-            <Text as={Link} to="/terms">
-              Términos y Condiciones
-            </Text>
-            <Text as={Link} to="/">
-              Políticas de Privacidad
-            </Text>
-            <Text as={Link} to="/">
-              Políticas de Devolución
+            <Text as={Link} to="/about">
+              Nosotros
             </Text>
             <Text as={Link} to="/contact">
               Contacto
@@ -81,10 +73,10 @@ const Layout: React.FC<PropsWithChildren & Props> = ({ children, withSearch }) =
         </Flex>
 
         <Flex flexDir={{ base: 'column-reverse', sm: 'row' }} justify="space-between" align="center" gap={2} w="100%">
-          <Text fontSize={12}>&copy; 2023 Boltick. Todos los derechos reservados.</Text>
-          <Flex align="center" gap={2}>
+          <Text fontSize={12}>&copy; 2024 Boltick. Todos los derechos reservados.</Text>
+          {/* <Flex align="center" gap={2}>
             <Text>Redes Sociales</Text>
-          </Flex>
+          </Flex> */}
         </Flex>
       </Flex>
     </Flex>

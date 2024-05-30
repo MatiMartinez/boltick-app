@@ -74,7 +74,7 @@ const Event: React.FC = () => {
           <Text fontSize={{ base: 14, md: 16 }}>{description}</Text>
 
           <Button as={RouterLink} to={`/payment/${objectID}`} size="lg">
-            Comprar Tickets
+            {event.cost === 'FREE' ? 'Obtener Tickets' : 'Comprar Tickets'}
           </Button>
         </Flex>
       </Flex>

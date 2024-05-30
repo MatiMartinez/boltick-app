@@ -1,16 +1,17 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import {
   About,
+  ConfirmFreeEvent,
   Contact,
   Error,
   Event,
-  Help,
+  // Help,
   Home,
   Payment,
   PaymentCallback,
   PaymentCallbackFailure,
   PaymentCallbackPending,
-  Terms,
+  // Terms,
 } from 'src/pages';
 import { Layout } from 'src/components';
 
@@ -45,24 +46,24 @@ function App() {
       ),
       errorElement: <Error />,
     },
-    {
-      path: '/terms',
-      element: (
-        <Layout>
-          <Terms />
-        </Layout>
-      ),
-      errorElement: <Error />,
-    },
-    {
-      path: '/help',
-      element: (
-        <Layout>
-          <Help />
-        </Layout>
-      ),
-      errorElement: <Error />,
-    },
+    // {
+    //   path: '/terms',
+    //   element: (
+    //     <Layout>
+    //       <Terms />
+    //     </Layout>
+    //   ),
+    //   errorElement: <Error />,
+    // },
+    // {
+    //   path: '/help',
+    //   element: (
+    //     <Layout>
+    //       <Help />
+    //     </Layout>
+    //   ),
+    //   errorElement: <Error />,
+    // },
     {
       path: '/event/:id',
       element: (
@@ -86,6 +87,10 @@ function App() {
     {
       path: '/payment-callback-failure',
       element: <PaymentCallbackFailure />,
+    },
+    {
+      path: '/confirm-free-event/:id',
+      element: <ConfirmFreeEvent />,
     },
   ]);
 

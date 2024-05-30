@@ -13,7 +13,7 @@ const Home: React.FC = () => {
       <Flex flexDir="column" gap={6}>
         <Heading size="md">Próximos Eventos</Heading>
         <Grid
-          templateColumns="repeat(auto-fit, minmax(300px, 1fr))"
+          templateColumns="repeat(auto-fill, minmax(300px, 1fr))"
           justifyContent="center"
           alignItems="center"
           placeItems="center"
@@ -31,7 +31,7 @@ const Home: React.FC = () => {
     <Flex flexDir="column" gap={6}>
       <Heading size="md">Próximos Eventos</Heading>
       <Grid
-        templateColumns="repeat(auto-fit, minmax(300px, 1fr))"
+        templateColumns="repeat(auto-fill, minmax(300px, 1fr))"
         justifyContent="center"
         alignItems="center"
         placeItems="center"

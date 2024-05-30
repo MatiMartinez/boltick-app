@@ -16,15 +16,31 @@ import { usePayment } from 'src/hooks';
 import { formatARS } from 'src/utils/currency';
 
 const Payment: React.FC = () => {
-  const { register, errors, event, tickets, isLoading, addTicket, removeTicket, onSubmit, handleSubmit } = usePayment();
+  const {
+    register,
+    errors,
+    event,
+    tickets,
+    isLoading,
+    addTicket,
+    removeTicket,
+    onSubmit,
+    onSubmitFreeEvent,
+    handleSubmit,
+  } = usePayment();
   const navigate = useNavigate();
 
   if (!event) return null;
 
-  if (isLoading) return <RedirectProgress />;
+  if (isLoading)
+    return (
+      <RedirectProgress
+        text={event.cost === 'FREE' ? 'Preparando todo para tus entradas.' : 'Preparando todo para tu compra.'}
+      />
+    );
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(event.cost === 'FREE' ? onSubmitFreeEvent : onSubmit)}>
       <Flex
         flexDir="column"
         justify="center"
@@ -106,7 +122,7 @@ const Payment: React.FC = () => {
               <Flex flexDir="column">
                 <Text fontSize={14}>{name}</Text>
                 <Text fontSize={16} fontWeight={600} color="green.600">
-                  {formatARS(cost)}
+                  {cost === 0 ? 'Gratis' : formatARS(cost)}
                 </Text>
               </Flex>
               <Flex flexDir="row" align="center" gap={4}>
@@ -151,7 +167,7 @@ const Payment: React.FC = () => {
           bg="green.600"
           color="white"
         >
-          Ir a pagar
+          {event.cost === 'FREE' ? 'Obtener entradas' : 'Ir a pagar'}
         </Button>
       </Flex>
     </form>

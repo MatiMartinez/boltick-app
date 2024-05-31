@@ -23,7 +23,7 @@ const Layout: React.FC<PropsWithChildren & Props> = ({ children, withSearch }) =
         <Flex flexDirection="row" align="center" gap={4}>
           <Menu />
           <Link to="/">
-            <Image src="/boltick.svg" alt="Logo" boxSize="28" height="max-content" />
+            <Image src="/boltick-negro.png" alt="Logo" width={[150, 150, 175]} />
           </Link>
         </Flex>
 

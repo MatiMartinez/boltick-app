@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Event } from 'src/interfaces';
 import { dateToSpanishText } from 'src/utils/date';
 
-const EventHomeCard: React.FC<Event> = ({ category, location_name, name, objectID, start_date }) => {
+const EventHomeCard: React.FC<Event> = ({ category, image, location_name, name, objectID, start_date }) => {
   return (
     <Flex
       as={Link}
@@ -17,7 +17,7 @@ const EventHomeCard: React.FC<Event> = ({ category, location_name, name, objectI
       position="relative"
     >
       <Image
-        src="/paax.jpeg"
+        src={image ?? '/paax.jpeg'}
         alt={name}
         position="absolute"
         top={0}

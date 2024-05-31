@@ -30,6 +30,7 @@ const usePayment = () => {
     },
   });
   const [isLoading, tickets] = watch(['isLoading', 'tickets']);
+  const [isFetchLoading, setIsFetchLoading] = useState(true);
   const [event, setEvent] = useState<Event | null>(null);
 
   useEffect(() => {
@@ -43,6 +44,9 @@ const usePayment = () => {
         })
         .catch(() => {
           navigate('/');
+        })
+        .finally(() => {
+          setIsFetchLoading(false);
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -181,7 +185,7 @@ const usePayment = () => {
       user: values.email,
     })
       .then(() => {
-        navigate(`/confirm-free-event/${event.objectID}`);
+        navigate(`/confirm-free-event/${event.objectID}`, { state: { items, user: values.email } });
       })
       .catch(() => {
         toast({
@@ -197,6 +201,7 @@ const usePayment = () => {
   };
 
   return {
+    isFetchLoading,
     register,
     errors,
     event,

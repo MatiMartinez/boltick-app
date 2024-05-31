@@ -1,6 +1,7 @@
 import { AddIcon, ArrowForwardIcon, ChevronLeftIcon, MinusIcon } from '@chakra-ui/icons';
 import {
   Button,
+  CircularProgress,
   Divider,
   Flex,
   FormControl,
@@ -17,6 +18,7 @@ import { formatARS } from 'src/utils/currency';
 
 const Payment: React.FC = () => {
   const {
+    isFetchLoading,
     register,
     errors,
     event,
@@ -29,6 +31,13 @@ const Payment: React.FC = () => {
     handleSubmit,
   } = usePayment();
   const navigate = useNavigate();
+
+  if (isFetchLoading)
+    return (
+      <Flex justify="center" align="center" height="100vh">
+        <CircularProgress isIndeterminate color="green.600" />
+      </Flex>
+    );
 
   if (!event) return null;
 

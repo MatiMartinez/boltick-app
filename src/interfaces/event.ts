@@ -5,6 +5,7 @@ export interface Event {
   description: string;
   djs: string[];
   finish_date: number;
+  image: string;
   location_address: string;
   location_name: string;
   name: string;

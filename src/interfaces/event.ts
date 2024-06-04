@@ -5,12 +5,16 @@ export interface Event {
   description: string;
   djs: string[];
   finish_date: number;
+  google_location: string;
   image: string;
   location_address: string;
   location_name: string;
   name: string;
   objectID: string;
+  purchase_end_date: number;
+  purchase_start_date: number;
   start_date: number;
+  status: number;
   tickets: Ticket[];
 }
 

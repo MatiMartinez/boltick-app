@@ -1,7 +1,8 @@
-import { Link as RouterLink } from 'react-router-dom';
-import { Button, CircularProgress, Flex, Heading, Image, Text } from '@chakra-ui/react';
+import { CircularProgress, Flex, Heading, Image, Link, Text } from '@chakra-ui/react';
+
 import { useMatchEvent } from 'src/hooks';
-import { dateToHHMM, dateToSpanishText } from 'src/utils/date';
+import { dateToSpanishTextAndHHMM } from 'src/utils/date';
+import { NextButton } from './components';
 
 const Event: React.FC = () => {
   const { event, isLoading } = useMatchEvent();
@@ -15,7 +16,7 @@ const Event: React.FC = () => {
 
   if (!event) return null;
 
-  const { category, description, location_name, location_address, name, objectID, start_date } = event;
+  const { category, description, google_location, location_name, location_address, name, start_date, status } = event;
 
   return (
     <>
@@ -36,15 +37,14 @@ const Event: React.FC = () => {
             position="absolute"
             top={{ base: 4, md: 8 }}
             left={{ base: 4, md: 8 }}
-            bg="black"
-            opacity="70%"
+            bg="white"
           >
-            <Text color="white" fontWeight={600}>
+            <Text color="black" fontWeight={700}>
               {category}
             </Text>
           </Flex>
           <Image
-            src="/event-back.jpg"
+            src={event.image ?? '/event-back.jpg'}
             alt={event.name}
             w={{ base: '100%', lg: 'auto' }}
             h={{ base: 225, sm: 300, md: 500, lg: 550, xl: 600 }}
@@ -56,7 +56,7 @@ const Event: React.FC = () => {
 
         <Flex flexDir="column" gap={{ base: 4, sm: 6 }} w="100%">
           <Text fontWeight={600} color="green.600">
-            {dateToSpanishText(start_date)}, {dateToHHMM(start_date)}
+            {dateToSpanishTextAndHHMM(start_date)}
           </Text>
 
           <Flex flexDir="column" gap={{ base: 1, sm: 2 }}>
@@ -64,18 +64,27 @@ const Event: React.FC = () => {
             <Text>{category}</Text>
           </Flex>
 
-          <Flex flexDir="column" gap={{ base: 0, md: 1 }}>
-            <Text fontSize="sm" fontWeight={600}>
-              {location_name}
-            </Text>
-            <Text fontSize="sm">{location_address}</Text>
-          </Flex>
+          {status > 0 && (
+            <Flex flexDir="column" gap={{ base: 0, md: 1 }}>
+              <Text fontSize="sm" fontWeight={600}>
+                {location_name}
+              </Text>
+              <Text fontSize="sm">{location_address}</Text>
+              <Link
+                textDecor="underline"
+                href={google_location}
+                target="_blank"
+                referrerPolicy="no-referrer"
+                w="max-content"
+              >
+                <Text fontSize="sm">Ver Google Maps</Text>
+              </Link>
+            </Flex>
+          )}
 
           <Text fontSize={{ base: 14, md: 16 }}>{description}</Text>
 
-          <Button as={RouterLink} to={`/payment/${objectID}`} size="lg">
-            {event.cost === 'FREE' ? 'Obtener Tickets' : 'Comprar Tickets'}
-          </Button>
+          <NextButton event={event} />
         </Flex>
       </Flex>
     </>

@@ -12,6 +12,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+
 import { RedirectProgress } from 'src/components';
 import { usePayment } from 'src/hooks';
 import { formatARS } from 'src/utils/currency';

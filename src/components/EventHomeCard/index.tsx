@@ -3,6 +3,7 @@ import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { Event } from 'src/interfaces';
 import { dateToSpanishText } from 'src/utils/date';
+import { normalizeEventLocationName } from 'src/utils/normalize';
 
 const EventHomeCard: React.FC<Event> = ({ category, image, location_name, name, objectID, start_date }) => {
   return (
@@ -28,7 +29,7 @@ const EventHomeCard: React.FC<Event> = ({ category, image, location_name, name, 
         borderRadius="3xl"
       />
 
-      <Box position="absolute" top={0} left={0} w="100%" h="100%" bg="#000" opacity="40%" borderRadius="3xl" />
+      <Box position="absolute" top={0} left={0} w="100%" h="100%" bg="#000" opacity="50%" borderRadius="3xl" />
 
       <Flex flexDir="column" justify="space-between" padding={6} zIndex={0} color="white">
         <Flex flexDir="column">
@@ -43,7 +44,7 @@ const EventHomeCard: React.FC<Event> = ({ category, image, location_name, name, 
           </Flex>
           <Flex align="center" gap={2}>
             <InfoIcon />
-            <Text fontSize="sm">{location_name}</Text>
+            <Text fontSize="sm">{normalizeEventLocationName(location_name)}</Text>
           </Flex>
         </Flex>
       </Flex>

@@ -39,6 +39,12 @@ const usePayment = () => {
         .getObject(id)
         .then((el) => {
           const currentEvent = el as Event;
+
+          if (currentEvent.status !== 1) {
+            navigate('/');
+            return;
+          }
+
           generateTickets(currentEvent);
           setEvent(currentEvent);
         })

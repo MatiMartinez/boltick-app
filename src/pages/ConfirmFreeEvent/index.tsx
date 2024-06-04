@@ -4,7 +4,7 @@ import { ArrowForwardIcon, CalendarIcon, CheckCircleIcon, InfoIcon } from '@chak
 import { Button, Divider, Flex, Heading, Text } from '@chakra-ui/react';
 
 import { useMatchEvent } from 'src/hooks';
-import { dateToHHMM, dateToSpanishText } from 'src/utils/date';
+import { dateToSpanishTextAndHHMM, dateToSpanishText } from 'src/utils/date';
 
 const ConfirmFreeEvent: FC = () => {
   const { state } = useLocation();
@@ -22,10 +22,11 @@ const ConfirmFreeEvent: FC = () => {
       flexDir="column"
       align="center"
       justify="center"
-      gap={12}
+      gap={8}
       minH="100vh"
       minW="100vw"
       paddingInline={{ base: 8, sm: 16, md: 48, lg: '30%', xl: '30%', '2xl': '35%' }}
+      paddingBlock={{ base: 8 }}
     >
       <Flex flexDir="column" gap={4} textAlign="center">
         <Text fontSize="lg" fontWeight={700}>
@@ -49,9 +50,7 @@ const ConfirmFreeEvent: FC = () => {
           <CalendarIcon fontSize="4xl" color="gray.500" />
           <Flex direction="column" gap={1}>
             <Text fontWeight={600}>{dateToSpanishText(event.start_date)}</Text>
-            <Text>
-              {dateToHHMM(event.start_date)} - {dateToHHMM(event.finish_date)}
-            </Text>
+            <Text>{dateToSpanishTextAndHHMM(event.start_date)}</Text>
           </Flex>
         </Flex>
 

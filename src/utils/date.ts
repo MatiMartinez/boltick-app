@@ -11,17 +11,22 @@ export const dateToText = (timestamp: number) => {
 };
 
 export const dateToSpanishText = (timestamp: number): string => {
+  if (!timestamp || timestamp === 0) return 'Próximamente';
   const date = new Date(timestamp);
   return date.toLocaleDateString('es-ES', { month: 'long', day: 'numeric' });
 };
 
-export const dateToHHMM = (timestamp: number): string => {
-  const date: Date = new Date(timestamp);
+export const dateToSpanishTextAndHHMM = (timestamp: number): string => {
+  if (!timestamp || timestamp === 0) return 'Próximamente';
+
+  const date = new Date(timestamp);
+  const spanishText = date.toLocaleDateString('es-ES', { month: 'long', day: 'numeric' });
+
   let hours: string = date.getHours().toString();
   let minutes: string = date.getMinutes().toString();
-
   hours = hours.length < 2 ? '0' + hours : hours;
   minutes = minutes.length < 2 ? '0' + minutes : minutes;
+  const HHMM = `${hours}:${minutes} hs`;
 
-  return `${hours}:${minutes} hs`;
+  return `${spanishText}, ${HHMM}`;
 };
